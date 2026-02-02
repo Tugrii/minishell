@@ -1,0 +1,200 @@
+SORU : ben branch ile ilgili hicbir sey bilmiyorum. bu zamana kadar hep main branch kullandim. bana ona gore anlat.
+
+Tuğra, bugüne kadar hep tek başına veya aynı dosya üzerinden gittiğin için main dışında bir şeye ihtiyaç duymaman çok normal. Ama şu an Zeynep ile "Çarpışmamak" için branşlar senin en yakın dostun olacak.
+
+Şöyle düşün: Bugüne kadar hep tek bir deftere sırayla yazı yazdınız. Biri yazarken diğeri beklemek zorundaydı ya da aynı anda yazınca yazılar birbirine giriyordu.
+
+Branş kullanmak ise şudur:
+
+📖 1. Fotokopi Mantığı (En Basit Anlatım)
+Şu an elinizde projenin ana dosyaları var (main branch).
+
+Branş Açmak: Projenin o anki halinin birebir fotokopisini çekip kendine özel bir klasöre koymak gibidir.
+
+Bağımsızlık: Sen kendi fotokopin üzerinde src/executor/ klasörüne istediğini yazarsın, silersin, dosyaları karıştırırsın. Ana dosya (main) asla değişmez.
+
+Görünmezlik: Zeynep senin o kağıda ne karaladığını görmez. O da kendi fotokopisi üzerinde src/parser/ ile uğraşır.
+
+📂 2. Bilgisayarında Fiziksel Olarak Ne Oluyor?
+Burası en ilginç kısım. Git, senin klasörünü o an hangi branştaysan ona göre "anında" düzenler.
+
+Sen feature/executor branşındayken ls yaparsın, kendi yazdığın dosyaları görürsün.
+
+Terminalden git checkout main (ana branşa geç) dediğin an, gözünün önünde o az önce yazdığın dosyalar klasörden kaybolur! Çünkü main branşında o dosyalar henüz yok.
+
+Tekrar kendi branşına geçtiğinde dosyaların geri gelir.
+
+Yani branşlar, aynı klasörün içindeki "farklı boyutlar" gibidir.
+
+🖇️ 3. İşler Nasıl Birleşiyor? (The Merge)
+Diyelim ki akşam oldu. Sen executor'ı bitirdin, Zeynep de parser'ı. Artık bunları birleştirip "gerçek proje" haline getirme vakti:
+
+Sen kendi fotokopini (branşını) GitHub'a gönderirsin.
+
+Zeynep de kendininkini gönderir.
+
+GitHub üzerinden "Merge" (Birleştir) dediğinizde; Git, senin eklediğin dosyaları ve Zeynep'in eklediği dosyaları alır, ikisini de ana dosyaya (main) ekler.
+
+Sonuç: Artık main branch'inde hem senin kodların hem Zeynep'inkiler tertemiz durur.
+
+🛠️ 4. Senin İçin "Adım Adım" Uygulama
+Yarın Cluster'a gittiğinde terminale şu 3-4 komutu yazman yeterli. Başka hiçbir şeye ihtiyacın yok:
+
+1. Kendi branşını oluştur (Sadece bir kez yapacaksın):
+
+Bash
+git checkout -b tugra_exec
+(Artık "tugra_exec" boyutundasın. İstediğini yapabilirsin.)
+
+2. Kodlarını yazdın, bitti. Bunları kendi boyutuna kaydet:
+
+Bash
+git add .
+git commit -m "Executor dosyalari eklendi"
+3. Kendi boyutunu internete (GitHub'a) yükle:
+
+Bash
+git push origin tugra_exec
+4. Zeynep'in yaptıklarını görmek istersen: Ana branşa geçip (git checkout main) oradan git pull yapman yeterli. Ama bunu sadece birleştirme yapacağınız zaman yapacaksınız.
+--------------------------------------------------------------------------------------------------------------------
+SORU : ertesi gun tekrar mi yeni branch olusturacagiz mesela mege ettik isimiz bitti ben tekrar zeynebin de ekledigi yeni dosyalarla birlikte calisabilmek icin tekrar mi brach olustracaz?
+
+Hayat planlama botu
+Özel Gem
+Hah, işte kilit soru bu! İşin "süreklilik" sırrını soruyorsun. Her gün yeni bir branch oluşturmana gerek yok ama her gün "paralel evrenini güncellemen" gerekiyor.
+
+Zeynep'in eklediği dosyaları kendi bilgisayarında ve kendi çalışma alanında görebilmen için izlemen gereken "Sabah Rutini" tam olarak şudur:
+
+🔄 Git "Sabah Şerifleri" Rutini (Güncelleme Döngüsü)
+Diyelim ki akşam her şeyi main'de birleştirdiniz ve eve gittiniz. Ertesi sabah Cluster'a oturdun:
+
+Ana Kampa Git: Önce ana dosyaların olduğu yere geç.
+
+Bash
+git checkout main
+Ganimetleri Topla: GitHub'daki (Zeynep'in de içinde olduğu) en son halini bilgisayarına çek.
+
+Bash
+git pull origin main
+Artık senin bilgisayarındaki main branch'inde Zeynep'in dosyaları da var!
+
+Kendi Evrenine Dön: Kendi çalıştığın branch'e geri git.
+
+Bash
+git checkout tugra_exec
+Zeynep'in Dosyalarını Kendi Dünyana Kat: İşte sihirli komut bu. main'deki (Zeynep'in dosyalarını içeren) yenilikleri kendi branch'ine kopyala.
+
+Bash
+git merge main
+🤔 "Yeni Branch mı, Eski Branch mı?"
+Aslında iki seçeneğin var:
+
+Seçenek A (Devam Etmek): Yukarıdaki gibi git merge main yaparak eski branch'inden devam edersin. (Daha kolaydır, geçmişini kaybetmezsin).
+
+Seçenek B (Taze Başlangıç): Eski branch'ini silip, main'den yepyeni bir tane açarsın:
+
+Bash
+git branch -D tugra_exec       # Eskiyi sil
+git checkout -b tugra_exec_v2  # Yeniyi aç
+Profesyoneller genelde her yeni "küçük özellik" için yeni bir branch açar ama Minishell gibi 20 günlük maratonda tek bir tugra_exec branch'ini güncel tutarak gitmek kafanı daha az karıştırır.
+
+⚠️ Birleşme Sonrası "Dosyalarım Gitti mi?" Korkusu
+Hayır, gitmez! git merge main yaptığında Git şuna bakar:
+
+"Tuğra executor/ klasöründe 2 dosya değiştirmiş."
+
+"Zeynep parser/ klasörüne 3 dosya eklemiş."
+
+Sonuç: Git, Zeynep'in dosyalarını senin klasörüne getirir ama senin yazdıklarına dokunmaz. İkisi birleşmiş olur.
+
+-----------------------------------------------------------------------------------------------------------------
+
+Soru : Tamam biz dongu olarak ne yapacagiz ? Tuğra, her şey hazır. Klasörleri kurdun, Zeynep'le el sıkıştın. Şimdi bu işin *"Kusursuz Döngüsü"*ne giriyoruz. Bu döngüye sadık kalırsanız, 16 Şubat'ta o projeyi teslim ederken "Dosyam silindi, kodlar karıştı" diye bir cümleniz asla olmayacak. 🛡️
+
+İşte yarından itibaren her gün uygulayacağın "Minishell Yaşam Döngüsü":
+
+☀️ 1. Sabah: "Karakolu Güncelleme" (Morning Routine)
+Cluster'a oturdun, kahveni aldın. İlk yapacağın şey dünyadan haber almak:
+
+Ana kampa git: git checkout main
+
+Zeynep'in gece attıklarını çek: git pull origin main
+
+Kendi dünyana dön: git checkout tugra_exec (Eğer branch yoksa: git checkout -b tugra_exec)
+
+Zeynep'in yeniliklerini kendi koduna yedir: git merge main
+
+💻 2. Gün Boyu: "Savaş Alanı" (Coding Phase)
+Bu aşamada sadece kendi klasöründe (src/executor/) ve branşında (tugra_exec) takıl:
+
+Kodunu yaz.
+
+Testlerini yap.
+
+Arada bir "kayıt noktası" al:
+
+git add .
+
+git commit -m "Executor: Pipe dongusu kuruldu"
+
+🌙 3. Akşam: "Ganimetleri Birleştirme" (Evening/Task Done)
+İşin bitti veya gün sona erdi. Kodunu ana kampa (main) gönderme vakti:
+
+Kodunu buluta yolla: git push origin tugra_exec
+
+GitHub'a gir: Orada sarı bir kutu göreceksin: "Compare & Pull Request". Ona bas.
+
+Merge Et: Zeynep'le yan yana bakın, "Hata yok" derseniz "Confirm Merge" yapın.
+
+Artık senin yaptığın her şey main branch'ine geçti!
+
+🔄 Bu Döngünün Görsel Özeti
+⚠️ Asla Yapmaman Gereken "3 Büyük Günah"
+main branch'inde kod yazma: Orası sizin "kutsal" ve çalışan kod alanınız. Sadece birleşmiş kodlar orada durmalı.
+
+git push --force kullanma: Bu komut arkadaşının kodlarını silebilir. Asla zorlama!
+
+Konuşmadan Merge yapma: Büyük bir değişikliği main'e atmadan önce Zeynep'e "Kanka ben header'ı değiştirdim, haberin olsun" de.
+-----------------------------------------------------------------------------------------------------------------
+Soru : ya zeynep ile ayni saatte calisiyorsak ve o henuz daha yeni degisikli kyapmisken ben onun mergini gormeyip yani guncel versiyonu kendi koduma gecemeyip eski versiyon uzerinde degisiklikler yaptiysam ? o zaman ne olacak ?
+
+Tuğra, korkma! İşte Git'in "büyücü" olduğu asıl an burası. Bu durum yazılım dünyasında her saniye yaşanıyor ve çözümü çok basit. Hiçbir şey silinmez, hiçbir şey kaybolmaz.
+
+Senin durumunu bir "Ev Arkadaşlığı" üzerinden anlatalım:
+
+🏠 Mutfak ve Salon Analojisi
+Düşün ki ikiniz aynı evin (projenin) içinde çalışıyorsunuz.
+
+Zeynep: Mutfaktaki (parser klasörü) dolapları boyadı ve "Ben işimi bitirdim" diyerek anahtarı merkeze (main) bıraktı.
+
+Sen: O sırada salonda (executor klasörü) televizyon ünitesi kuruyordun. Zeynep'in mutfağı boyadığından haberin yok, sen hala evin "eski boyalı" halindeki salonda çalışıyorsun.
+
+Sonuç ne olur? Sen işini bitirip "Benim salon hazır" dediğinde, Git gelir ve der ki: "Tamam Tuğra, senin yeni salonunu alıyorum, Zeynep'in yeni mutfağını da alıyorum; ikisini birleştirip harika bir ev yapıyorum."
+
+🛡️ Git Bu Durumu Nasıl Engeller? (The Safety Lock)
+Sen eski versiyon üzerindeyken kodunu GitHub'a göndermeye (push) çalıştığında, GitHub sana kırmızı bir uyarı verir:
+
+"Hata! Senin versiyonun eski. Önce arkadaşının yaptıklarını al, sonra kendi yaptıklarını gönder."
+
+GitHub seni durdurur, yani Zeynep'in kodunun üstüne yanlışlıkla yazamazsın. Sistem buna izin vermez.
+
+🛠️ Bu Durumda Ne Yapacaksın? (Kurtarma Operasyonu)
+Diyelim ki 3 saattir çalışıyorsun ve Zeynep'in main'e bir şeyler attığını fark ettin. Hemen şu sırayı izle:
+
+Kendi İşini Kaydet: (Yarım kalsa bile commit at, kaybolmasın)
+
+Bash
+git add .
+git commit -m "Executor uzerinde calismaya devam"
+Zeynep'in Yeniliklerini Al:
+
+Bash
+git checkout main
+git pull origin main
+Kendi Dünyana Zeynep'i Davet Et:
+
+Bash
+git checkout tugra_exec
+git merge main
+O an ne olur? Git, senin 3 saatlik emeğinle Zeynep'in yeni attığı kodları "şak" diye birleştirir. Sen farklı klasörde (executor), o farklı klasörde (parser) olduğu için Git hiçbir hata vermeden ikisini de aynı klasöre koyar.
+
