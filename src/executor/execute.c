@@ -1,17 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tgeler <tgeler@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 18:19:56 by tgeler            #+#    #+#             */
-/*   Updated: 2026/02/05 18:19:56 by tgeler           ###   ########.fr       */
+/*   Created: 2026/02/05 21:31:11 by tgeler            #+#    #+#             */
+/*   Updated: 2026/02/05 21:31:11 by tgeler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
-# include "src/executor/executor.h"
+#include "../../Libft/libft.h"
+#include "executor_struct.h"
 
-#endif
+void	execute(path_info *minishell)
+{
+	int	i;
+
+	i = 0;
+	while (minishell->commands[i])
+	{
+		
+		i++;
+	}
+}
