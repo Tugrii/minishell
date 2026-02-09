@@ -18,7 +18,7 @@ static char	*if_accesible_return_exact_path(char *command, char **path_list)
 	int		i;
 
 	i = 0;
-	if (ft_strchr(command, '/') && access(command, F_OK) == 0)
+	if (ft_strchr(command, '/') && access(command, 0) == 0)
 		return (ft_strdup(command));
 	while (path_list[i])
 	{
@@ -32,7 +32,7 @@ static char	*if_accesible_return_exact_path(char *command, char **path_list)
 	return (NULL);
 }
 
-static int	calculate_command_counts(char **commands)
+int	calculate_command_count(char ***commands)
 {
 	int	i;
 
@@ -64,22 +64,22 @@ static int	check_is_builtin(char *command)
 	return (0);
 }
 
-static void	add_sign_to_paths(char ***path_list)
+static void	add_sign_to_paths(char **path_list)
 {
 	int		i;
 	char	*temp;
 
 	i = 0;
-	while (*path_list[i])
+	while (path_list[i])
 	{
-		temp = ft_strjoin(*path_list[i], "/");
-		free (*path_list[i]);
-		*path_list[i] = temp;
+		temp = ft_strjoin(path_list[i], "/");
+		free (path_list[i]);
+		path_list[i] = temp;
 		i++;
 	}
 }
 
-char	**obtain_exact_paths(char **path_list, char **commands)
+char	**obtain_exact_paths(char **path_list, char ***commands)
 {
 	char	**exact_path_list;
 	int		command_count;
@@ -94,10 +94,10 @@ char	**obtain_exact_paths(char **path_list, char **commands)
 	exact_path_list[command_count] = NULL;
 	while (i < command_count)
 	{
-		if (check_is_builtin(commands[i]) == 1)
+		if (check_is_builtin(commands[i][0]) == 1)
 			exact_path_list[i] = NULL;
 		else
-			exact_path_list[i] = if_accesible_return_exact_path(commands[i],
+			exact_path_list[i] = if_accesible_return_exact_path(commands[i][0],
 					path_list);
 		i++;
 	}
