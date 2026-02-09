@@ -12,7 +12,7 @@
 
 #include "../../Libft/libft.h"
 
-char	*if_accesible_return_exact_path(char *command, char **path_list)
+static char	*if_accesible_return_exact_path(char *command, char **path_list)
 {
 	char	*temp;
 	int		i;
@@ -20,6 +20,8 @@ char	*if_accesible_return_exact_path(char *command, char **path_list)
 	i = 0;
 	while (path_list[i])
 	{
+		if (ft_strchr(command, '/'))
+			return (command);
 		temp = ft_strjoin(path_list[i], command);
 		if (access(temp, 0) == 0)
 			return (temp);
@@ -30,7 +32,7 @@ char	*if_accesible_return_exact_path(char *command, char **path_list)
 	return (NULL);
 }
 
-int	calculate_command_counts(char **commands)
+static int	calculate_command_counts(char **commands)
 {
 	int	i;
 
@@ -40,7 +42,7 @@ int	calculate_command_counts(char **commands)
 	return (i);
 }
 
-int	check_is_builtin(char *command)
+static int	check_is_builtin(char *command)
 {
 	char	**built_ins;
 	int		i;
@@ -56,7 +58,7 @@ int	check_is_builtin(char *command)
 	return (0);
 }
 
-void	add_sign_to_paths(char ***path_list)
+static void	add_sign_to_paths(char ***path_list)
 {
 	int		i;
 	char	*temp;
@@ -71,7 +73,7 @@ void	add_sign_to_paths(char ***path_list)
 	}
 }
 
-char	**obtain_exact_paths(char ***path_list, char **commands)
+char	**obtain_exact_paths(char **path_list, char **commands)
 {
 	char	**exact_path_list;
 	int		command_count;
