@@ -18,10 +18,10 @@ static char	*if_accesible_return_exact_path(char *command, char **path_list)
 	int		i;
 
 	i = 0;
+	if (ft_strchr(command, '/') && access(command, F_OK) == 0)
+		return (ft_strdup(command));
 	while (path_list[i])
 	{
-		if (ft_strchr(command, '/'))
-			return (command);
 		temp = ft_strjoin(path_list[i], command);
 		if (access(temp, 0) == 0)
 			return (temp);
@@ -44,14 +44,20 @@ static int	calculate_command_counts(char **commands)
 
 static int	check_is_builtin(char *command)
 {
-	char	**built_ins;
+	char	*built_ins[8];
 	int		i;
 
 	i = 0;
-	built_ins = {"echo", "cd", "pwd", "export", "unset", "env", "exit"};
+	built_ins[0] = "echo";
+	built_ins[1] = "cd";
+	built_ins[2] = "pwd";
+	built_ins[3] = "export";
+	built_ins[4] = "unset";
+	built_ins[5] = "env";
+	built_ins[6] = "exit";
 	while (i < 7)
 	{
-		if (ft_strncmp(command, built_ins[i], ft_strlen(command)) == 0)
+		if (ft_strncmp(command, built_ins[i], ft_strlen(built_ins[i]) + 1) == 0)
 			return (1);
 		i++;
 	}
@@ -66,8 +72,8 @@ static void	add_sign_to_paths(char ***path_list)
 	i = 0;
 	while (*path_list[i])
 	{
-		temp = ft_strjoin(*path_list[i], '/');
-		free (*path[i]);
+		temp = ft_strjoin(*path_list[i], "/");
+		free (*path_list[i]);
 		*path_list[i] = temp;
 		i++;
 	}

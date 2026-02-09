@@ -20,7 +20,7 @@ static char	*find_path_in_envp(char **envp)
 	while (envp[i])
 	{
 		if (ft_strnstr(envp[i], "PATH=", 5))
-			return (envp[i]);
+			return (envp[i] + 5);
 		i++;
 	}
 }
