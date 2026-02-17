@@ -6,7 +6,7 @@
 /*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 18:18:33 by tgeler            #+#    #+#             */
-/*   Updated: 2026/02/17 17:53:42 by tgeler           ###   ########.fr       */
+/*   Updated: 2026/02/17 18:13:50 by tgeler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int main(int argc, char **argv, char **envp)
 	// minishell.commands = zeynebin yaptigi parserden gelen commandı bulan fonksiyon
 	minishell.cmd_count = calculate_command_count(minishell->commands);
 	minishell.path_list = obtain_path_list(envp);
-	minishell.exact_path_list = obtain_exact_paths(minishell.path_list, tum  argümanları ve flagleri içeren triple pointer);
+	minishell.exact_path_list = obtain_exact_paths(&minishell);
 	execute(&minishell);
 }

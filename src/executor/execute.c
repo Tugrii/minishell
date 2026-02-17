@@ -21,7 +21,7 @@ void	execute(exec_infos *minishell)
 	command_count = calculate_command_count(minishell->commands);
 	minishell->child_pids = malloc(command_count * sizeof(pid_t));
 	if (!(minishell->child_pids))
-		error(1, "Malloc Error!", 'm', minishell);
+		exec_error(1, "Malloc Error!", 'm', minishell);
 	while (i < command_count)
 	{
 		
