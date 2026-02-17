@@ -27,4 +27,6 @@ typedef struct minishell
 
 int	calculate_command_count(char ***commands);
 
+int	calculate_command_count(char ***commands);
+
 #endif
