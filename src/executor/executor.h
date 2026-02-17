@@ -12,6 +12,7 @@
 
 #ifndef EXECUTOR_H
 # define EXECUTOR_H
+# include "../../Libft/libft.h"
 # include "executor_struct.h"
 
 char	**obtain_path_list(char **envp);

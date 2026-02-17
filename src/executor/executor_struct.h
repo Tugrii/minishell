@@ -13,11 +13,17 @@
 #ifndef EXECUTOR_STRUCT_H
 # define EXECUTOR_STRUCT_H
 
+# include "<sys/wait.h>"
 typedef struct minishell
 {
 	char	**path_list;
 	char	**exact_path_list;
-	char	**commands;
+	char	***commands;
+	char	**envp;
+	pid_t	*child_pids;
+	int		fds[2];
 }path_info;
+
+int	calculate_command_count(char ***commands);
 
 #endif
