@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   executor.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgeler <tgeler@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 21:23:05 by tgeler            #+#    #+#             */
 /*   Updated: 2026/02/05 21:23:05 by tgeler           ###   ########.fr       */

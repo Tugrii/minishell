@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_exact_paths.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgeler <tgeler@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 20:29:25 by tgeler            #+#    #+#             */
 /*   Updated: 2026/02/03 20:29:25 by tgeler           ###   ########.fr       */
@@ -90,7 +90,7 @@ char	**obtain_exact_paths(char **path_list, char ***commands)
 	command_count = calculate_command_count(commands);
 	exact_path_list = (char **)malloc((command_count + 1) * sizeof(char *));
 	if (!exact_path_list)
-		MALLOC_ERROR!!
+		error(1, "Malloc Error!", 'm', );
 	exact_path_list[command_count] = NULL;
 	while (i < command_count)
 	{

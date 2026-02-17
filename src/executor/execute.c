@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execute.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgeler <tgeler@student.42istanbul.com.tr    +#+  +:+       +#+        */
+/*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 21:31:11 by tgeler            #+#    #+#             */
 /*   Updated: 2026/02/05 21:31:11 by tgeler           ###   ########.fr       */
@@ -12,7 +12,7 @@
 
 #include "executor.h"
 
-void	execute(path_info *minishell)
+void	execute(exec_infos *minishell)
 {
 	int		i;
 	int		command_count;
@@ -21,7 +21,7 @@ void	execute(path_info *minishell)
 	command_count = calculate_command_count(minishell->commands);
 	minishell->child_pids = malloc(command_count * sizeof(pid_t));
 	if (!(minishell->child_pids))
-		MALLOC_ERROR!
+		error(1, "Malloc Error!", 'm', minishell);
 	while (i < command_count)
 	{
 		

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   obtain_path_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tgeler <tgeler@student.42istanbul.com.t    +#+  +:+       +#+        */
+/*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/03 20:27:08 by tgeler            #+#    #+#             */
 /*   Updated: 2026/02/03 20:27:08 by tgeler           ###   ########.fr       */
