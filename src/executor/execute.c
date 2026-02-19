@@ -12,19 +12,46 @@
 
 #include "executor.h"
 
-void	execute(exec_infos *minishell)
+void	close_related_fds(int fdin, int fdout, char mode)
+{
+	if (mode == 'e')
+		perror("Fork Error!");
+	close(fdin);
+	close(fdout);
+}
+void	lets_work_the_child(int i, exec_infos *executor)
+{
+	if (i == 0)
+	{
+		dup2(executor->fds[0], 0);
+		dup2(executor->fds[1], 1);
+	}
+	else
+	{
+
+	}
+	close_related_fds(fds[0], fds[1], 'n');
+	execve(executor->exact_path_list[i], executor->commands[i], executor->envp);
+}
+
+void	execute(exec_infos *executor)
 {
 	int		i;
-	int		command_count;
+	int		prev_fd;
 
 	i = 0;
-	command_count = calculate_command_count(minishell->commands);
-	minishell->child_pids = malloc(command_count * sizeof(pid_t));
-	if (!(minishell->child_pids))
-		exec_error(1, "Malloc Error!", 'm', minishell);
-	while (i < command_count)
+	executor->pids = malloc(executor->cmd_count * sizeof(pid_t));
+	if (!(executor->pids))
+		exec_error(1, "Malloc Error!", 'm', executor);
+	while (i < executor->cmd_count)
 	{
-		
-		child_pids[i] = fork();
+		pipe(executor->fds);
+		executor->pids[i] = fork();
+		if (executor->pids[i] == -1)
+			close_related_fds(fds[0], fds[1], 'e');
+		if (executor->pids[i] == 0)
+			lets_work_the_child(i, executor);
+		i++;
 	}
 }
+
