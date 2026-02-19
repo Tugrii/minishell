@@ -6,7 +6,7 @@
 /*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 16:11:02 by tgeler            #+#    #+#             */
-/*   Updated: 2026/02/17 19:12:51 by tgeler           ###   ########.fr       */
+/*   Updated: 2026/02/19 20:39:28 by tgeler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ void	free_all_exec_utils1(exec_infos *executor, int *i)
 		free(executor->commands);
 	}
 	executor->commands = NULL;
-	if (executor->child_pids)
-		free(executor->child_pids);
-	executor->child_pids = NULL;
+	if (executor->pids)
+		free(executor->pids);
+	executor->pids = NULL;
 }
 
 void	free_all_exec(exec_infos *executor, int *i)

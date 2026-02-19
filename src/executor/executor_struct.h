@@ -20,7 +20,7 @@ typedef struct minishell
 	char	**exact_path_list;
 	char	***commands;
 	char	**envp;
-	pid_t	*child_pids;
+	pid_t	*pids;
 	int		fds[2];
 	int		cmd_count;
 }exec_infos;
