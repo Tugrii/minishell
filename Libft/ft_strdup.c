@@ -1,41 +1,26 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/03 19:44:12 by tgeler            #+#    #+#             */
-/*   Updated: 2025/06/03 19:44:12 by tgeler           ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
+#include <stdlib.h>
 
-static size_t	ft_strlen_dup(const char *str)
+char	*ft_strdup(const char *s1)
 {
-	size_t	i;
+	char	*dup;
+	int		len;
+	int		i;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	return (i);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dynamic_memory;
-	size_t	i;
-
-	i = 0;
-	dynamic_memory = (char *)malloc(ft_strlen_dup(s) + 1);
-	if (!dynamic_memory)
+	if (!s1)
 		return (NULL);
-	while (s[i] != '\0')
+	len = 0;
+	while (s1[len])
+		len++;
+	dup = (char *)malloc(len + 1);
+	if (!dup)
+		return (NULL);
+	i = 0;
+	while (i < len)
 	{
-		dynamic_memory[i] = s[i];
+		dup[i] = s1[i];
 		i++;
 	}
-	dynamic_memory[i] = '\0';
-	return (dynamic_memory);
+	dup[len] = '\0';
+	return (dup);
 }
