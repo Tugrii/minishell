@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Libft/libft.h"
+#include "executor.h"
 
 static char	*if_accesible_return_exact_path(char *command, exec_infos *executor)
 {
@@ -89,10 +89,10 @@ char	**obtain_exact_paths(exec_infos *executor)
 
 	i = 0;
 	add_sign_to_paths(executor);
-	executor->exact_path_list = (char **)malloc((cmd_count + 1) * sizeof(char *));
+	executor->exact_path_list = (char **)malloc((executor->cmd_count + 1) * sizeof(char *));
 	if (!executor->exact_path_list)
 		exec_error(1, "Malloc Error!", 'm', executor);
-	executor->exact_path_list[comd_count] = NULL;
+	executor->exact_path_list[executor->cmd_count] = NULL;
 	while (i < executor->cmd_count)
 	{
 		if (check_is_builtin(executor->commands[i][0]) == 1)

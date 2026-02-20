@@ -16,5 +16,5 @@
 # include "executor_struct.h"
 
 char	**obtain_path_list(char **envp);
-char	**obtain_exact_paths(char **path_list, char **commands);
+char	**obtain_exact_paths(exec_infos *executor);
 #endif

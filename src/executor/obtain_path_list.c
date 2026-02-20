@@ -30,7 +30,7 @@ char	**obtain_path_list(char **envp)
 	char	**path_list;
 	char	*non_splitted_paths;
 
-	non_splitted_path = find_path_in_envp(envp);
-	path_list = ft_split(non_splitted_path, ':');
+	non_splitted_paths = find_path_in_envp(envp);
+	path_list = ft_split(non_splitted_paths, ':');
 	return (path_list);
 }

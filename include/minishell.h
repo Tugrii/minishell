@@ -1,9 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/02/05 18:19:56 by tgeler            #+#    #+#             */
+/*   Updated: 2026/02/20 21:01:08 by tgeler           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-# include <stddef.h>
-# include <stdlib.h>
-# include "libft.h"
+# include "src/executor/executor.h"
 
 typedef enum e_toktype
 {
