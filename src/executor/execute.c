@@ -30,7 +30,7 @@ void	lets_work_the_child(int i, exec_infos *executor)
 	{
 
 	}
-	close_related_fds(fds[0], fds[1], 'n');
+	close_related_fds(executor->fds[0], executor->fds[1], 'n');
 	execve(executor->exact_path_list[i], executor->commands[i], executor->envp);
 }
 
@@ -48,7 +48,7 @@ void	execute(exec_infos *executor)
 		pipe(executor->fds);
 		executor->pids[i] = fork();
 		if (executor->pids[i] == -1)
-			close_related_fds(fds[0], fds[1], 'e');
+			close_related_fds(executor->fds[0], executor->fds[1], 'e');
 		if (executor->pids[i] == 0)
 			lets_work_the_child(i, executor);
 		i++;
