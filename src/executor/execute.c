@@ -19,39 +19,53 @@ void	close_related_fds(int fdin, int fdout, char mode)
 	close(fdin);
 	close(fdout);
 }
-void	lets_work_the_child(int i, exec_infos *executor)
+void	lets_work_the_child(int i, exec_infos *executor, int prev_fd)
 {
-	if (i == 0)
+	if (i > 0)
 	{
-		dup2(executor->fds[0], 0);
-		dup2(executor->fds[1], 1);
+		dup2(prev_fd, 0);
+		close(prev_fd);
 	}
-	else
-	{
 
-	}
+	if (i < (executor->cmd_count - 1))
+		dup2(executor->fds[1], 1);
 	close_related_fds(executor->fds[0], executor->fds[1], 'n');
-	execve(executor->exact_path_list[i], executor->commands[i], executor->envp);
 }
 
 void	execute(exec_infos *executor)
 {
 	int		i;
 	int		prev_fd;
+	int		j;
 
+	j = 0;
 	i = 0;
+	prev_fd = -1;
 	executor->pids = malloc(executor->cmd_count * sizeof(pid_t));
 	if (!(executor->pids))
 		exec_error(1, "Malloc Error!", 'm', executor);
 	while (i < executor->cmd_count)
 	{
-		pipe(executor->fds);
+		if (i < executor->cmd_count - 1)
+			pipe(executor->fds);
 		executor->pids[i] = fork();
 		if (executor->pids[i] == -1)
 			close_related_fds(executor->fds[0], executor->fds[1], 'e');
 		if (executor->pids[i] == 0)
-			lets_work_the_child(i, executor);
+			lets_work_the_child(i, executor, prev_fd);
+		if (prev_fd != -1)
+			close (prev_fd);
+		if ((i < executor->cmd_count - 1) && executor->pids[i] != -1)
+		{
+			close(executor->fds[1]);
+			prev_fd = executor->fds[0];
+		}
 		i++;
+	}
+	while (j < i)
+	{
+		waitpid(executor->pids[j], NULL, 0);
+		j++;
 	}
 }
 
