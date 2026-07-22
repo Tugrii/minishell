@@ -32,9 +32,14 @@ void	sb_reserve(t_str *sb, size_t need)
 		new_cap = 16;
 	while (new_cap < need + 1)
 		new_cap *= 2;
-	new_buf = realloc(sb->buf, new_cap);
+	new_buf = malloc(new_cap);
 	if (!new_buf)
-		fatal_alloc("realloc");
+		fatal_alloc("malloc");
+	if (sb->buf)
+	{
+		ft_memcpy(new_buf, sb->buf, sb->len);
+		free(sb->buf);
+	}
 	sb->buf = new_buf;
 	sb->cap = new_cap;
 }
