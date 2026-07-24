@@ -24,16 +24,18 @@ char	**list_to_array_utils(t_shell *shell, char **argv)
 	i = 0;
 	while (traversal_env)
 	{
-		temp = ft_strjoin(traversal_env->key, "=");
-		if (!temp)
-			malloc_error(shell, NULL);
-		joined_str = ft_strjoin(temp, traversal_env->value);
-		if (!joined_str)
-			malloc_error(shell, temp);
-		free (temp);
-		argv[i] = joined_str;
+		if (traversal_env->value)
+		{
+			temp = ft_strjoin(traversal_env->key, "=");
+			if (!temp)
+				malloc_error(shell, NULL);
+			joined_str = ft_strjoin(temp, traversal_env->value);
+			if (!joined_str)
+				malloc_error(shell, temp);
+			free(temp);
+			argv[i++] = joined_str;
+		}
 		traversal_env = traversal_env->next;
-		i++;
 	}
 	return (argv);
 }
@@ -48,8 +50,9 @@ char	**list_to_array(t_shell *shell)
 	traversal_env = shell->env;
 	while (traversal_env)
 	{
+		if (traversal_env->value)
+			i++;
 		traversal_env = traversal_env->next;
-		i++;
 	}
 	argv = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!argv)
