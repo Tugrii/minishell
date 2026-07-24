@@ -14,7 +14,7 @@
 # define LEXER_H
 # include "../../include/minishell.h"
 
-typedef struct lex
+typedef struct s_lex
 {
 	int			i;
 	int			is_heredoc_delim;
