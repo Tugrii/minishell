@@ -27,3 +27,4 @@ int		is_valid_command(t_shell *shell, t_cmd *command_list);
 void	if_redirection_valid_apply_redir(t_shell *shell, t_cmd *command_list,
 			int is_child);
 void	is_not_last_command_open_pipe(t_shell *shell, t_cmd *cmd);
+void	signal_actions(int *success, t_shell *shell);

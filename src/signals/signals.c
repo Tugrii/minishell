@@ -22,10 +22,9 @@ void	handle_signals(int signum)
 	if (signum == SIGINT)
 	{
 		g_signal_status = 130;
-		rl_replace_line("", 0);
-		rl_redisplay();
-		write(1, "^C\n", 3);
+		write(STDOUT_FILENO, "\n", 1);
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -34,9 +33,9 @@ void	signal_initilaze(void)
 {
 	struct sigaction	sig;
 
-	sig.sa_handler = handle_signals;
-	sigemptyset(&(sig.sa_mask));
+	sigemptyset(&sig.sa_mask);
 	sig.sa_flags = 0;
+	sig.sa_handler = handle_signals;
 	sigaction(SIGINT, &sig, NULL);
 	sig.sa_handler = SIG_IGN;
 	sigaction(SIGQUIT, &sig, NULL);
@@ -47,8 +46,8 @@ void	handle_heredoc_signals(int signum)
 	if (signum == SIGINT)
 	{
 		g_signal_status = 130;
-		write(1, "\n", 1);
-		close(0);
+		write(STDOUT_FILENO, "\n", 1);
+		close(STDIN_FILENO);
 	}
 }
 

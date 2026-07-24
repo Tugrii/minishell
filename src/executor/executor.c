@@ -14,6 +14,15 @@
 #include "../signals/signals.h"
 #include "free_functions/free_functions.h"
 
+void	signal_actions(int *success, t_shell *shell)
+{
+	shell->last_status = 128 + WTERMSIG(*success);
+	if (WTERMSIG(*success) == SIGINT)
+		write(1, "\n", 1);
+	else if (WTERMSIG(*success) == SIGQUIT)
+		write(1, "Quit (core dumped)\n", 19);
+}
+
 void	execute_if_dnnp_u(t_shell *shell, t_cmd *command_list, int *success)
 {
 	pid_t	process_id;
@@ -38,7 +47,7 @@ void	execute_if_dnnp_u(t_shell *shell, t_cmd *command_list, int *success)
 		if (WIFEXITED(*success))
 			shell->last_status = WEXITSTATUS(*success);
 		else if (WIFSIGNALED(*success))
-			shell->last_status = 128 + WTERMSIG(*success);
+			signal_actions(success, shell);
 	}
 }
 

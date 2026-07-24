@@ -44,6 +44,8 @@ int	check_exit_status(t_cmd *command_list)
 		return (2);
 	else if (command_list->argv[1] && !is_number(command_list->argv[1]))
 		return (3);
+	else if (command_list->argv[1] && check_is_over_lim(command_list->argv[1]))
+		return (3);
 	else if (command_list->argv[1] && command_list->argv[2])
 		return (4);
 	return (5);

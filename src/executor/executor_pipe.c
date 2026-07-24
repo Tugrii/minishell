@@ -23,7 +23,7 @@ void	executor_pipe_last_check(t_shell *shell, pid_t last_pid)
 		if (WIFEXITED(raw_status))
 			shell->last_status = WEXITSTATUS(raw_status);
 		else if (WIFSIGNALED(raw_status))
-			shell->last_status = 128 + WTERMSIG(raw_status);
+			signal_actions(&raw_status, shell);
 	}
 	while (wait(NULL) > 0)
 		;

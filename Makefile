@@ -6,7 +6,7 @@
 #    By: tgeler <tgeler@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/06/20 19:03:59 by tgeler            #+#    #+#              #
-#    Updated: 2026/07/21 04:59:48 by tgeler           ###   ########.fr        #
+#    Updated: 2026/07/24 15:38:31 by tgeler           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRCS =	main.c\
 		src/executor/builtins/export_utils5.c\
 		src/executor/builtins/export_utils6.c\
 		src/executor/builtins/exit.c\
+		src/executor/builtins/check_is_over_limit.c\
 		src/executor/builtins/unset.c\
 		src/executor/builtins/env.c\
 		src/executor/builtins/print_error_msg.c\
