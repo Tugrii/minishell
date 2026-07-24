@@ -46,7 +46,7 @@ void	run_exit(t_cmd *command_list, t_shell *shell)
 	else if (status == 2 || status == 3)
 	{
 		print_error_msg_exit(command_list->argv[1], 1);
-		exit(255);
+		exit(2);
 	}
 	else if (status == 4)
 	{
