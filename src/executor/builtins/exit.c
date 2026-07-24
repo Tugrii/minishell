@@ -20,31 +20,13 @@ void	set_then_close_keyboard_and_screen(t_shell *shell)
 	close(shell->orig_stdout);
 }
 
-int	is_number(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (str[0] == '+' || str[0] == '-')
-		i = 1;
-	while (str[i] != '\0')
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	check_exit_status(t_cmd *command_list)
+int	check_exit_status(t_cmd *command_list, long long *exit_val)
 {
 	if (!command_list->argv[1])
 		return (1);
 	else if (command_list->argv[1] && command_list->argv[1][0] == '\0')
 		return (2);
-	else if (command_list->argv[1] && !is_number(command_list->argv[1]))
-		return (3);
-	else if (command_list->argv[1] && check_is_over_lim(command_list->argv[1]))
+	else if (parse_exit_number(command_list->argv[1], exit_val, 0, 1) == 0)
 		return (3);
 	else if (command_list->argv[1] && command_list->argv[2])
 		return (4);
@@ -53,21 +35,18 @@ int	check_exit_status(t_cmd *command_list)
 
 void	run_exit(t_cmd *command_list, t_shell *shell)
 {
-	int	status;
+	int			status;
+	long long	exit_val;
 
+	exit_val = 0;
 	set_then_close_keyboard_and_screen(shell);
-	status = check_exit_status(command_list);
+	status = check_exit_status(command_list, &exit_val);
 	if (status == 1)
 		exit(shell->last_status);
-	else if (status == 2)
-	{
-		print_error_msg_exit(NULL, 1);
-		exit(2);
-	}
-	else if (status == 3)
+	else if (status == 2 || status == 3)
 	{
 		print_error_msg_exit(command_list->argv[1], 1);
-		exit(2);
+		exit(255);
 	}
 	else if (status == 4)
 	{
@@ -75,5 +54,5 @@ void	run_exit(t_cmd *command_list, t_shell *shell)
 		shell->last_status = 1;
 	}
 	else
-		exit(ft_atoi(command_list->argv[1]) % 256);
+		exit((unsigned char)exit_val);
 }

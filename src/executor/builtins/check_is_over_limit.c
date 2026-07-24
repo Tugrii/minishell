@@ -12,53 +12,42 @@
 
 #include "../../../Libft/libft.h"
 
-static int	check_is_over_limit_utils(int last_index, char *str, int sign)
+static int	check_overflow(unsigned long long res, int sign, char digit)
 {
-	long long	result;
-	long long	calc;
-	int			len;
+	unsigned long long	max;
 
-	len = ft_strlen(str);
-	result = 0;
-	result += str[last_index] - '0';
-	calc = 10;
-	last_index--;
-	if ((str[0] == '-' || str[0] == '+') && len > 11)
+	max = 9223372036854775807ULL;
+	if (sign == -1)
+		max = 9223372036854775808ULL;
+	if (res > max / 10)
 		return (1);
-	else if (len > 10 && !(str[0] == '-' || str[0] == '+'))
+	if (res == max / 10 && (unsigned long long)(digit - '0') > (max % 10))
 		return (1);
-	while (last_index != -1
-		&& !(str[last_index] == '-' || str[last_index] == '+'))
-	{
-		result += calc * (str[last_index] - '0');
-		calc *= 10;
-		last_index--;
-	}
-	result *= sign;
-	if ((result >= -2147483648 && result <= 2147483647))
-		return (0);
-	return (1);
+	return (0);
 }
 
-int	check_is_over_lim(char *str)
+int	parse_exit_number(char *str, long long *result, int i, int sign)
 {
-	int			i;
-	int			sign;
-	int			last_index;
+	unsigned long long	tmp;
 
-	i = 0;
-	while (str[i])
-	{
-		last_index = ft_strlen(str) - 1;
-		sign = 1;
-		if (str[0] == '-' || str[0] == '+')
-		{
-			if (str[0] == '-')
-				sign = -1;
-		}
-		if (check_is_over_limit_utils(last_index, str, sign))
-			return (1);
+	tmp = 0;
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
+	if (str[i] == '-' || str[i] == '+')
+		if (str[i++] == '-')
+			sign = -1;
+	if (!ft_isdigit(str[i]))
+		return (0);
+	while (ft_isdigit(str[i]))
+	{
+		if (check_overflow(tmp, sign, str[i]))
+			return (0);
+		tmp = (tmp * 10) + (str[i++] - '0');
 	}
-	return (0);
+	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i])
+		return (0);
+	*result = (long long)tmp * sign;
+	return (1);
 }

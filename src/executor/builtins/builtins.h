@@ -81,4 +81,4 @@ int		check_getcwd_set_env(char **current_pwd, char *old_pwd,
 void	flag_triggered(int flag, char *target, char *old_pwd);
 void	oldpwd_error(t_shell *shell, char *old_pwd);
 char	*set_old_pwd_print_pwd(t_shell *shell, int *flag);
-int		check_is_over_lim(char *str);
+int		parse_exit_number(char *str, long long *result, int i, int sign);
